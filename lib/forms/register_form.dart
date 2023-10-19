@@ -223,7 +223,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       textColor: whiteColor,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          Get.to(HomeScreen(),transition: Transition.fadeIn,duration: Duration(seconds: 2));
+                          Get.to(HomeScreen(),transition: Transition.fadeIn,duration: Duration(seconds: 1));
 
 
                         }}),

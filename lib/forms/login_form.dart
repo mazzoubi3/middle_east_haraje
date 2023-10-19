@@ -9,6 +9,9 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../controller/auth_controller.dart';
+import '../screens/home_screen.dart';
+
 
 class LogInForm extends StatefulWidget {
   const LogInForm({
@@ -48,6 +51,8 @@ class _LogInFormState extends State<LogInForm> {
 
   @override
   Widget build(BuildContext context) {
+    AuthController con = Get.put(AuthController());
+
     return Column(
       children: [
         Padding(
@@ -116,8 +121,8 @@ class _LogInFormState extends State<LogInForm> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(
-                          context, ResetPasswordScreen.screenId);
+                      Get.to(const ResetPasswordScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
+
                     },
                     child: Text(
                       'Forgot Password ?',
@@ -139,7 +144,12 @@ class _LogInFormState extends State<LogInForm> {
                     textColor: whiteColor,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
+                        con.loginApi(email: _emailController.text,password: _passwordController.text,context: context).then((value) {
+                          if(value['success']==true){
+                            Get.to(const HomeScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
 
+                          }
+                        });
                       }
                     }),
               ],
@@ -156,7 +166,7 @@ class _LogInFormState extends State<LogInForm> {
               TextSpan(
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    Get.to(RegisterScreen(),transition: Transition.fadeIn,duration: Duration(seconds: 2));
+                    Get.to(const RegisterScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
 
                   },
                 text: 'Create new account',
@@ -177,17 +187,17 @@ class _LogInFormState extends State<LogInForm> {
         const SizedBox(
           height: 20,
         ),
-        Text(
-          'Or',
-          style: TextStyle(
-            fontSize: 18,
-            color: greyColor,
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        LoginInButtons(),
+        // Text(
+        //   'Or',
+        //   style: TextStyle(
+        //     fontSize: 18,
+        //     color: greyColor,
+        //   ),
+        // ),
+        // const SizedBox(
+        //   height: 15,
+        // ),
+        // const LoginInButtons(),
       ],
     );
   }

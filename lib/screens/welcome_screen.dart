@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
               textColor: blackColor,
               text: 'Log In',
               onPressed: () {
-                Get.to(LoginScreen(),transition: Transition.fadeIn,duration: Duration(seconds: 2));
+                Get.to(const LoginScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 2));
               }),
         ),
         const SizedBox(

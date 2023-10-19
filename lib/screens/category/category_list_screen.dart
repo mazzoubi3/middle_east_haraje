@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:middle_east_haraje/forms/sell_car_form.dart';
 import 'package:middle_east_haraje/screens/category/product_by_category_screen.dart';
 import 'package:middle_east_haraje/screens/category/subcategory_screen.dart';
@@ -67,13 +68,15 @@ class CategoryListScreen extends StatelessWidget {
 
                   if (isForForm == true) {
                     if (doc['subcategory'] == null) {
-                      Navigator.of(context)
-                          .pushNamed(SellCarForm.screenId);
+                      Get.to(SellCarForm(),transition: Transition.fadeIn,duration:Duration(seconds: 1) );
+                      //
+                      // Navigator.of(context)
+                      //     .pushNamed(SellCarForm.screenId);
                     } else {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => SubCategoryScreen(
+                              builder: (builder) => const SubCategoryScreen(
                                    isForForm: true)));
                     }
                   } else {
@@ -84,7 +87,7 @@ class CategoryListScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (builder) => SubCategoryScreen(
+                              builder: (builder) => const SubCategoryScreen(
 
                               )));
                     }

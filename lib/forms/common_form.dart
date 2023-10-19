@@ -546,7 +546,7 @@ class _CommonFormState extends State<CommonForm> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      prefix: const Text('₹ '),
+                      prefix: const Text('\$ '),
                       labelText: 'Price*',
                       labelStyle: TextStyle(
                         color: greyColor,

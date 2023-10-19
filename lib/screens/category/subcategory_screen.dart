@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:middle_east_haraje/forms/common_form.dart';
 import 'package:middle_east_haraje/screens/category/product_by_category_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,18 @@ class SubCategoryScreen extends StatefulWidget {
 }
 
 class _SubCategoryScreenState extends State<SubCategoryScreen> {
-  List data=[];
+  List data=[
+
+    {
+      'name':'kamel'
+    },
+    {
+      'name':'kamel'
+    },
+    {
+      'name':'kamel'
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,16 +56,19 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
 
                   if (isForForm == true) {
-                    Navigator.pushNamed(context, CommonForm.screenId);
+                    Get.to(CommonForm(),transition: Transition.fadeIn,duration:Duration(seconds: 1) );
+                    // Navigator.pushNamed(context, CommonForm.screenId);
                   } else {
-                    Navigator.pushNamed(
-                      context,
-                      ProductByCategory.screenId,
-                    );
+                    Get.to(ProductByCategory(),transition: Transition.fadeIn,duration:Duration(seconds: 1) );
+
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   ProductByCategory.screenId,
+                    // );
                   }
                 },
                 title: Text(
-                  data[index],
+                  data[index]['name'],
                   style: const TextStyle(
                     fontSize: 15,
                   ),

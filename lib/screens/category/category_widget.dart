@@ -48,9 +48,9 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 height: 10,
               ),
               InkWell(
-                onTap: () => Get.to(CategoryListScreen(),
+                onTap: () => Get.to(CategoryListScreen(isForForm: true),
                     transition: Transition.fadeIn,
-                    duration: const Duration(seconds: 2)),
+                    duration: const Duration(seconds: 1)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
