@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'locale/locale.dart';
 import 'screens/main_navigatiion_screen.dart';
 import 'screens/splash_screen.dart';
 
@@ -24,8 +25,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      // locale: Locale(sharedPreferences!.getString('lang') ?? 'ar'.toString()),
-      // translations: mylocale(),
+      locale: Locale(sharedPreferences!.getString('lang') ?? 'ar'.toString()),
+      translations: mylocale(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

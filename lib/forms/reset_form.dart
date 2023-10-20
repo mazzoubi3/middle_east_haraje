@@ -1,9 +1,13 @@
+import 'package:get/get.dart';
 import 'package:middle_east_haraje/constants/colors.dart';
 import 'package:middle_east_haraje/constants/validators.dart';
 import 'package:middle_east_haraje/constants/widgets.dart';
 import 'package:middle_east_haraje/screens/auth/login_screen.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_dialog/awesome_dialog.dart' as dialog;
+
+import '../controller/auth_controller.dart';
 
 class ResetForm extends StatefulWidget {
   const ResetForm({
@@ -34,6 +38,8 @@ class _ResetFormState extends State<ResetForm> {
 
   @override
   Widget build(BuildContext context) {
+    AuthController con = Get.put(AuthController());
+
     return Column(
       children: [
         Padding(
@@ -73,7 +79,18 @@ class _ResetFormState extends State<ResetForm> {
                     textColor: whiteColor,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-
+                        con.forgetPassword(email: _emailController.text).then((value) {
+                          if(value['success']==true){
+                            dialog.AwesomeDialog(
+                              context: context,
+                              dialogType: dialog.DialogType.info,
+                              animType: dialog.AnimType.bottomSlide,
+                              title: 'انتبه  !'.tr,
+                              desc: value['message'],
+                              btnOkOnPress: () {},
+                            ).show();
+                          }
+                        });
                       }
                     }),
               ],

@@ -1,7 +1,10 @@
+import 'package:get/get.dart';
 import 'package:middle_east_haraje/constants/colors.dart';
 import 'package:middle_east_haraje/constants/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../controller/auth_controller.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const screenId = 'profile_screen';
@@ -12,9 +15,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final GoogleSignIn googleSignIn = GoogleSignIn();
   @override
   Widget build(BuildContext context) {
+    AuthController con = Get.put(AuthController());
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,11 +29,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 50))),
               onPressed: () async {
+                con.logOut(context);
+
                 loadingDialogBox(context, 'Signing Out');
 
                 Navigator.of(context).pop();
-                await googleSignIn.signOut();
-
                 // await FirebaseAuth.instance.signOut().then((value) {
                 //   Navigator.of(context).pushNamedAndRemoveUntil(
                 //       WelcomeScreen.screenId, (route) => false);

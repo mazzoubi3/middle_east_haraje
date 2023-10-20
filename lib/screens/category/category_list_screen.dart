@@ -68,7 +68,7 @@ class CategoryListScreen extends StatelessWidget {
 
                   if (isForForm == true) {
                     if (doc['subcategory'] == null) {
-                      Get.to(SellCarForm(),transition: Transition.fadeIn,duration:Duration(seconds: 1) );
+                      Get.to(const SellCarForm(),transition: Transition.fadeIn,duration:const Duration(seconds: 1) );
                       //
                       // Navigator.of(context)
                       //     .pushNamed(SellCarForm.screenId);

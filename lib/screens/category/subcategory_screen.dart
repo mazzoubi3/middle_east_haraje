@@ -56,10 +56,10 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
 
 
                   if (isForForm == true) {
-                    Get.to(CommonForm(),transition: Transition.fadeIn,duration:Duration(seconds: 1) );
+                    Get.to(const CommonForm(),transition: Transition.fadeIn,duration:const Duration(seconds: 1) );
                     // Navigator.pushNamed(context, CommonForm.screenId);
                   } else {
-                    Get.to(ProductByCategory(),transition: Transition.fadeIn,duration:Duration(seconds: 1) );
+                    Get.to(const ProductByCategory(),transition: Transition.fadeIn,duration:const Duration(seconds: 1) );
 
                     // Navigator.pushNamed(
                     //   context,

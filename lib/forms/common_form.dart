@@ -138,7 +138,7 @@ class _CommonFormState extends State<CommonForm> {
 
                 Navigator.pop(context);
               },
-              title: Text('iphone'),
+              title: const Text('iphone'),
               leading: Image.network(
               '',
                 width: 35,

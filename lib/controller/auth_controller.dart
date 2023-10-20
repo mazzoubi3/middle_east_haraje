@@ -60,6 +60,48 @@ class AuthController extends GetxController {
     print(sharedPreferences!.getString('token').toString());
     print(sharedPreferences!.getString('id').toString());
   }
+  Future forgetPassword({required String email, context}) async {
+    var res = await http.post(Uri.parse(baseLinkForgetPassword),
+        headers: {'X-AppApiToken': apiKey},
+        body: {
+      'email': email,
+      "auth_field": 'email',
+      "phone":'',
+      "phone_country": '',
+    });
+    print(res.statusCode);
+    if (res.statusCode == 200) {
+      var data = utf8.decode(res.bodyBytes);
+      var data1 = json.decode(res.body);
+      userData = data1;
+
+      print(json.decode(res.body));
+
+      if (userData['success'] == true) {
+
+      } else {
+        dialog.AwesomeDialog(
+          context: context,
+          dialogType: dialog.DialogType.info,
+          animType: dialog.AnimType.bottomSlide,
+          title: 'انتبه  !'.tr,
+          desc: 'الايميل  خاطئ',
+          btnOkOnPress: () {},
+        ).show();
+      }
+      print(json.decode(res.body));
+      return json.decode(res.body);
+    } else {
+      dialog.AwesomeDialog(
+        context: context,
+        dialogType: dialog.DialogType.info,
+        animType: dialog.AnimType.bottomSlide,
+        title: 'انتبه  !'.tr,
+        desc: 'الايميل  خاطئ',
+        btnOkOnPress: () {},
+      ).show();
+    }
+  }
 
   // Future changePass(
   //     {required String passOld, newPassword, conPassword, context}) async {
@@ -100,29 +142,32 @@ class AuthController extends GetxController {
   //   }
   // }
   //
-  // Future logOut(context) async {
-  //   var response = await http.get(Uri.parse(baseLinkLogout), headers: {
-  //     'Authorization': 'Bearer ${sharedPreferences.getString('token')}'
-  //   });
-  //   // response.headers.addAll(headers);
-  //
-  //   if (response.statusCode == 200) {
-  //     var responseData = utf8.decode(response.bodyBytes);
-  //
-  //     print(json.decode(responseData));
-  //
-  //     return json.decode(responseData);
-  //   } else {
-  //     dialog.AwesomeDialog(
-  //             context: context,
-  //             dialogType: dialog.DialogType.info,
-  //             animType: dialog.AnimType.bottomSlide,
-  //             title: 'I notice  !'.tr,
-  //             desc: 'Unauthenticated'.tr,
-  //             btnOkOnPress: () {})
-  //         .show();
-  //   }
-  // }
+  Future logOut(context) async {
+    var response = await http.get(Uri.parse(baseLinkLogout),
+      headers: {
+      'Authorization': sharedPreferences!.getString('token') ?? '',
+      'X-AppApiToken': apiKey},
+
+    );
+    // response.headers.addAll(headers);
+
+    if (response.statusCode == 200) {
+      var responseData = utf8.decode(response.bodyBytes);
+
+      print(json.decode(responseData));
+
+      return json.decode(responseData);
+    } else {
+      dialog.AwesomeDialog(
+              context: context,
+              dialogType: dialog.DialogType.info,
+              animType: dialog.AnimType.bottomSlide,
+              title: 'I notice  !'.tr,
+              desc: 'Unauthenticated'.tr,
+              btnOkOnPress: () {})
+          .show();
+    }
+  }
   //
   // // Future<void> uploadPhotoWithBody(
   // //     String imagePath, Map<String, String> bodyData) async {
