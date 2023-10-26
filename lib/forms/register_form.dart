@@ -6,8 +6,9 @@ import 'package:middle_east_haraje/constants/widgets.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
+import '../controller/auth_controller.dart';
+import '../screens/auth/login_screen.dart';
 import '../screens/home_screen.dart';
-
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({
@@ -24,10 +25,12 @@ class _RegisterFormState extends State<RegisterForm> {
   late final TextEditingController _lastNameController;
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  late final TextEditingController _phoneController;
   late final TextEditingController _confirmPasswordController;
   late final FocusNode _firstNameNode;
   late final FocusNode _lastNameNode;
   late final FocusNode _emailNode;
+  late final FocusNode _phoneNode;
   late final FocusNode _passwordNode;
   late final FocusNode _confirmPasswordNode;
   final _formKey = GlobalKey<FormState>();
@@ -37,9 +40,11 @@ class _RegisterFormState extends State<RegisterForm> {
     _lastNameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    _phoneController = TextEditingController();
     _confirmPasswordController = TextEditingController();
     _firstNameNode = FocusNode();
     _lastNameNode = FocusNode();
+    _phoneNode = FocusNode();
     _emailNode = FocusNode();
     _passwordNode = FocusNode();
     _confirmPasswordNode = FocusNode();
@@ -64,6 +69,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    AuthController con = Get.put(AuthController());
+
     return SizedBox(
       height: MediaQuery.of(context).size.height - 250,
       child: Column(
@@ -79,8 +86,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   TextFormField(
                     focusNode: _firstNameNode,
                     validator: (value) {
-                      return checkNullEmptyValidation(
-                          value, 'first name');
+                      return checkNullEmptyValidation(value, 'name');
                     },
                     controller: _firstNameController,
                     keyboardType: TextInputType.name,
@@ -90,7 +96,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           color: greyColor,
                           fontSize: 14,
                         ),
-                        hintText: 'Enter your First Name',
+                        hintText: 'Enter your  Name',
                         hintStyle: TextStyle(
                           color: greyColor,
                           fontSize: 14,
@@ -125,16 +131,15 @@ class _RegisterFormState extends State<RegisterForm> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8))),
                   ),
-
                   const SizedBox(
                     height: 15,
                   ),
                   TextFormField(
-                    focusNode: _lastNameNode,
+                    focusNode: _phoneNode,
                     validator: (value) {
                       return checkNullEmptyValidation(value, 'Phone');
                     },
-                    controller: _lastNameController,
+                    controller: _phoneController,
                     keyboardType: TextInputType.name,
                     decoration: InputDecoration(
                         labelText: 'Phone',
@@ -151,7 +156,6 @@ class _RegisterFormState extends State<RegisterForm> {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8))),
                   ),
-
                   const SizedBox(
                     height: 15,
                   ),
@@ -223,10 +227,24 @@ class _RegisterFormState extends State<RegisterForm> {
                       textColor: whiteColor,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          Get.to(HomeScreen(),transition: Transition.fadeIn,duration: Duration(seconds: 1));
+                          con
+                              .registerApi(
+                                  name: _firstNameController.text,
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                  passwordConfirmation:
+                                      _confirmPasswordController.text,
+                                  phone: _phoneController.text,
+                                  context: context)
+                              .then((value) {
+                                if(value['success']==true) {
+                                  Get.to(const LoginScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
+                                }
 
+                          });
 
-                        }}),
+                        }
+                      }),
                 ],
               ),
             ),
@@ -249,17 +267,17 @@ class _RegisterFormState extends State<RegisterForm> {
           const SizedBox(
             height: 15,
           ),
-          Text(
-            'Or',
-            style: TextStyle(
-              fontSize: 18,
-              color: greyColor,
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const SignUpButtons(),
+          // Text(
+          //   'Or',
+          //   style: TextStyle(
+          //     fontSize: 18,
+          //     color: greyColor,
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 15,
+          // ),
+          // const SignUpButtons(),
         ],
       ),
     );

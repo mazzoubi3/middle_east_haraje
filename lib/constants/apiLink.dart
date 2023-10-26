@@ -3,6 +3,7 @@ String apiKey = 'WlNTeFVLalNheHBZbzBRMW9ZdzBtQmlDb28yMEM0Z2o=';
 
 /////////////////auth////////////////
 String baseLinkLogin = '${baseLink}auth/login';
+String baseLinkRegister = '${baseLink}users';
 String baseLinkLogout = '${baseLink}auth/logout';
 String baseLinkForgetPassword = '${baseLink}auth/password/email';
 

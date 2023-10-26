@@ -60,6 +60,47 @@ class AuthController extends GetxController {
     print(sharedPreferences!.getString('token').toString());
     print(sharedPreferences!.getString('id').toString());
   }
+  Future registerApi({required String name,email, phone,password,passwordConfirmation, context}) async {
+    var res = await http.post(Uri.parse(baseLinkRegister),
+        headers: {'X-AppApiToken': apiKey},
+        body: {
+      'country_code': 'SA',
+      "name": name,
+      "auth_field": 'email',
+      "email": email,
+      "phone":phone,
+      "phone_country": 'SA',
+      "password": password,
+      "password_confirmation": passwordConfirmation,
+      "accept_terms": '1',
+    });
+    print(res.statusCode);
+    if (res.statusCode == 200) {
+      var responseData = utf8.decode(res.bodyBytes);
+
+      print(json.decode(responseData));
+
+      return json.decode(responseData);
+
+    } else {
+      var responseData = utf8.decode(res.bodyBytes);
+
+      print(json.decode(responseData));
+var data=json.decode(responseData);
+      dialog.AwesomeDialog(
+        context: context,
+        dialogType: dialog.DialogType.info,
+        animType: dialog.AnimType.bottomSlide,
+        title: 'انتبه  !'.tr,
+        desc: data['message'],
+        btnOkOnPress: () {},
+      ).show();
+      return json.decode(responseData);
+
+    }
+
+    print(sharedPreferences!.getString('id').toString());
+  }
   Future forgetPassword({required String email, context}) async {
     var res = await http.post(Uri.parse(baseLinkForgetPassword),
         headers: {'X-AppApiToken': apiKey},
@@ -230,17 +271,5 @@ class AuthController extends GetxController {
   //     print(jsonDecode(response.body));
   //     print('Error ${myRequest.statusCode}');
   //   }
-  // }
-  //
-  // Future checkToken() async {
-  //   print(sharedPreferences.getString('token'));
-  //   var response = await http.get(
-  //     Uri.parse(
-  //         '$baseLinkCheckToken/${sharedPreferences.getString('token')!.split('|')[1]}'),
-  //   );
-  //   var responseData = utf8.decode(response.bodyBytes);
-  //   print(json.decode(responseData));
-  //   print(sharedPreferences.getString('token')!.split('|')[1]);
-  //   return json.decode(responseData);
   // }
 }

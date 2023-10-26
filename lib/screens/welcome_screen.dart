@@ -51,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
               textColor: blackColor,
               text: 'Log In',
               onPressed: () {
-                Get.to(const LoginScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 2));
+                Get.to(const LoginScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
               }),
         ),
         const SizedBox(
@@ -65,7 +65,7 @@ class WelcomeScreen extends StatelessWidget {
               text: 'Sign Up',
               textColor: whiteColor,
               onPressed: () {
-                Navigator.pushNamed(context, RegisterScreen.screenId);
+                Get.to(const RegisterScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
               }),
         ),
         const SizedBox(
